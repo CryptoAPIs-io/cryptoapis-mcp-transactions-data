@@ -1,6 +1,6 @@
 {
   "name": "@cryptoapis-io/mcp-transactions-data",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MCP server for transaction lookup and listing across EVM, UTXO, Solana, XRP, and Kaspa blockchains via Crypto APIs",
   "license": "MIT",
   "author": "Crypto APIs, Inc.",
