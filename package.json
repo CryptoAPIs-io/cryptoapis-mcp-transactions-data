@@ -1,6 +1,6 @@
 {
   "name": "@cryptoapis-io/mcp-transactions-data",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "MCP server for transaction lookup and listing across EVM, UTXO, Solana, XRP, and Kaspa blockchains via Crypto APIs",
   "license": "MIT",
   "author": "Crypto APIs, Inc.",
@@ -8,6 +8,7 @@
     "type": "git",
     "url": "https://github.com/CryptoAPIs-io/cryptoapis-mcp-transactions-data.git"
   },
+  "mcpName": "io.github.CryptoAPIs-io/mcp-transactions-data",
   "keywords": [
     "mcp",
     "cryptoapis",
@@ -27,7 +28,8 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "server.json"
   ],
   "bin": {
     "cryptoapis-mcp-transactions-data": "dist/cli.js"
