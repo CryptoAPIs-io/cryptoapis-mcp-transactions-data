@@ -1,17 +1,17 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.CryptoAPIs-io/mcp-transactions-data",
-  "description": "MCP server for transaction lookup and listing across EVM, UTXO, Solana, XRP, and Kaspa blockchains via Crypto APIs",
+  "description": "MCP server for transaction lookup across EVM, UTXO, Solana, XRP, Kaspa via Crypto APIs",
   "repository": {
     "url": "https://github.com/CryptoAPIs-io/cryptoapis-mcp-transactions-data",
     "source": "github"
   },
-  "version": "0.2.2",
+  "version": "0.2.3",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "@cryptoapis-io/mcp-transactions-data",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "transport": {
         "type": "stdio"
       },
