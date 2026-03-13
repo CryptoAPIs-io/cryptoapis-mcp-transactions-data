@@ -1,4 +1,4 @@
-import type { CryptoApisHttpClient, RequestResult } from "@cryptoapis-io/mcp-shared";
+import type { CryptoApisHttpClient, McpLogger, RequestResult } from "@cryptoapis-io/mcp-shared";
 import type { McpToolDef } from "../types.js";
 import { UtxoTransactionToolSchema, type UtxoTransactionToolInput } from "./schema.js";
 import { getTransactionDetails } from "../../api/utxo-transaction/get-transaction-details/index.js";
@@ -16,7 +16,7 @@ export const utxoTransactionTool: McpToolDef<typeof UtxoTransactionToolSchema> =
     credits: { "get-transaction-details": getDetailsCredits, "get-raw-transaction-data": getRawCredits },
     inputSchema: UtxoTransactionToolSchema,
     handler:
-        (client: CryptoApisHttpClient) =>
+        (client: CryptoApisHttpClient, logger: McpLogger) =>
         async (input: UtxoTransactionToolInput) => {
             let result: RequestResult<unknown>;
             const base = { blockchain: input.blockchain, network: input.network, transactionHash: input.transactionHash, context: input.context };
@@ -25,6 +25,18 @@ export const utxoTransactionTool: McpToolDef<typeof UtxoTransactionToolSchema> =
             } else {
                 result = await getRawTransactionData(client, base);
             }
+
+            logger.logInfo({
+                tool: "transactions_data_utxo",
+                action: input.action,
+                blockchain: input.blockchain,
+                network: input.network,
+                creditsConsumed: result.creditsConsumed,
+                creditsAvailable: result.creditsAvailable,
+                responseTime: result.responseTime,
+                throughputUsage: result.throughputUsage,
+            });
+
             return {
                 content: [
                     {

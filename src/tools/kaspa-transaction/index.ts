@@ -1,4 +1,4 @@
-import type { CryptoApisHttpClient, RequestResult } from "@cryptoapis-io/mcp-shared";
+import type { CryptoApisHttpClient, McpLogger, RequestResult } from "@cryptoapis-io/mcp-shared";
 import type { McpToolDef } from "../types.js";
 import { KaspaTransactionToolSchema, type KaspaTransactionToolInput } from "./schema.js";
 import { getTransactionDetails } from "../../api/kaspa-transaction/get-transaction-details/index.js";
@@ -12,13 +12,25 @@ export const kaspaTransactionTool: McpToolDef<typeof KaspaTransactionToolSchema>
     credits: getDetailsCredits,
     inputSchema: KaspaTransactionToolSchema,
     handler:
-        (client: CryptoApisHttpClient) =>
+        (client: CryptoApisHttpClient, logger: McpLogger) =>
         async (input: KaspaTransactionToolInput) => {
             const result = await getTransactionDetails(client, {
                 network: input.network,
                 transactionId: input.transactionId,
                 context: input.context,
             });
+
+            logger.logInfo({
+                tool: "transactions_data_kaspa",
+                action: "get-transaction-details",
+                blockchain: "kaspa",
+                network: input.network,
+                creditsConsumed: result.creditsConsumed,
+                creditsAvailable: result.creditsAvailable,
+                responseTime: result.responseTime,
+                throughputUsage: result.throughputUsage,
+            });
+
             return {
                 content: [
                     {

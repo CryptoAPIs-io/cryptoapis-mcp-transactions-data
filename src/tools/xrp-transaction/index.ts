@@ -1,4 +1,4 @@
-import type { CryptoApisHttpClient, RequestResult } from "@cryptoapis-io/mcp-shared";
+import type { CryptoApisHttpClient, McpLogger, RequestResult } from "@cryptoapis-io/mcp-shared";
 import type { McpToolDef } from "../types.js";
 import { XrpTransactionToolSchema, type XrpTransactionToolInput } from "./schema.js";
 import { getTransactionDetails } from "../../api/xrp-transaction/get-transaction-details/index.js";
@@ -12,13 +12,25 @@ export const xrpTransactionTool: McpToolDef<typeof XrpTransactionToolSchema> = {
     credits: getDetailsCredits,
     inputSchema: XrpTransactionToolSchema,
     handler:
-        (client: CryptoApisHttpClient) =>
+        (client: CryptoApisHttpClient, logger: McpLogger) =>
         async (input: XrpTransactionToolInput) => {
             const result = await getTransactionDetails(client, {
                 network: input.network,
                 transactionHash: input.transactionHash,
                 context: input.context,
             });
+
+            logger.logInfo({
+                tool: "transactions_data_xrp",
+                action: "get-transaction-details",
+                blockchain: "xrp",
+                network: input.network,
+                creditsConsumed: result.creditsConsumed,
+                creditsAvailable: result.creditsAvailable,
+                responseTime: result.responseTime,
+                throughputUsage: result.throughputUsage,
+            });
+
             return {
                 content: [
                     {

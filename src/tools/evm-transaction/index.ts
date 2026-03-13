@@ -1,4 +1,4 @@
-import type { CryptoApisHttpClient, RequestResult } from "@cryptoapis-io/mcp-shared";
+import type { CryptoApisHttpClient, McpLogger, RequestResult } from "@cryptoapis-io/mcp-shared";
 import type { McpToolDef } from "../types.js";
 import { EvmTransactionToolSchema, type EvmTransactionToolInput } from "./schema.js";
 import * as evmApi from "../../api/evm-transaction/index.js";
@@ -22,7 +22,7 @@ export const evmTransactionTool: McpToolDef<typeof EvmTransactionToolSchema> = {
     },
     inputSchema: EvmTransactionToolSchema,
     handler:
-        (client: CryptoApisHttpClient) =>
+        (client: CryptoApisHttpClient, logger: McpLogger) =>
         async (input: EvmTransactionToolInput) => {
             const base = { blockchain: input.blockchain, network: input.network, transactionHash: input.transactionHash, context: input.context };
             let result: RequestResult<unknown>;
@@ -39,7 +39,21 @@ export const evmTransactionTool: McpToolDef<typeof EvmTransactionToolSchema> = {
                 case "list-logs":
                     result = await evmApi.listLogs(client, base);
                     break;
+                default:
+                    throw new Error(`Unknown action: ${(input as any).action}`);
             }
+
+            logger.logInfo({
+                tool: "transactions_data_evm",
+                action: input.action,
+                blockchain: input.blockchain,
+                network: input.network,
+                creditsConsumed: result.creditsConsumed,
+                creditsAvailable: result.creditsAvailable,
+                responseTime: result.responseTime,
+                throughputUsage: result.throughputUsage,
+            });
+
             return {
                 content: [
                     {
