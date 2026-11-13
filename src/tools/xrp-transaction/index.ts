@@ -1,3 +1,4 @@
+import { READ_ONLY_TOOL } from "@cryptoapis-io/mcp-shared";
 import type { CryptoApisHttpClient, McpLogger, RequestResult } from "@cryptoapis-io/mcp-shared";
 import type { McpToolDef } from "../types.js";
 import { XrpTransactionToolSchema, type XrpTransactionToolInput } from "./schema.js";
@@ -8,6 +9,8 @@ const DESCRIPTION = `Transactions Data XRP: get transaction details by transacti
 
 export const xrpTransactionTool: McpToolDef<typeof XrpTransactionToolSchema> = {
     name: "transactions_data_xrp",
+    title: "XRP transaction details",
+    annotations: READ_ONLY_TOOL,
     description: DESCRIPTION,
     credits: getDetailsCredits,
     inputSchema: XrpTransactionToolSchema,

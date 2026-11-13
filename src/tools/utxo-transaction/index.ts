@@ -1,3 +1,4 @@
+import { READ_ONLY_TOOL } from "@cryptoapis-io/mcp-shared";
 import type { CryptoApisHttpClient, McpLogger, RequestResult } from "@cryptoapis-io/mcp-shared";
 import type { McpToolDef } from "../types.js";
 import { UtxoTransactionToolSchema, type UtxoTransactionToolInput } from "./schema.js";
@@ -12,6 +13,8 @@ Actions: get-transaction-details, get-raw-transaction-data. Blockchains: bitcoin
 
 export const utxoTransactionTool: McpToolDef<typeof UtxoTransactionToolSchema> = {
     name: "transactions_data_utxo",
+    title: "UTXO transaction details",
+    annotations: READ_ONLY_TOOL,
     description: DESCRIPTION,
     credits: { "get-transaction-details": getDetailsCredits, "get-raw-transaction-data": getRawCredits },
     inputSchema: UtxoTransactionToolSchema,

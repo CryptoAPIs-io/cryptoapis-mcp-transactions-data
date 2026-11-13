@@ -1,3 +1,4 @@
+import { READ_ONLY_TOOL } from "@cryptoapis-io/mcp-shared";
 import type { CryptoApisHttpClient, McpLogger, RequestResult } from "@cryptoapis-io/mcp-shared";
 import type { McpToolDef } from "../types.js";
 import { KaspaTransactionToolSchema, type KaspaTransactionToolInput } from "./schema.js";
@@ -8,6 +9,8 @@ const DESCRIPTION = `Transactions Data Kaspa: get transaction details by transac
 
 export const kaspaTransactionTool: McpToolDef<typeof KaspaTransactionToolSchema> = {
     name: "transactions_data_kaspa",
+    title: "Kaspa transaction details",
+    annotations: READ_ONLY_TOOL,
     description: DESCRIPTION,
     credits: getDetailsCredits,
     inputSchema: KaspaTransactionToolSchema,

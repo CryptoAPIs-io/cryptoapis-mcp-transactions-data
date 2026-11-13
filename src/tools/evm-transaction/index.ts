@@ -1,3 +1,4 @@
+import { READ_ONLY_TOOL } from "@cryptoapis-io/mcp-shared";
 import type { CryptoApisHttpClient, McpLogger, RequestResult } from "@cryptoapis-io/mcp-shared";
 import type { McpToolDef } from "../types.js";
 import { EvmTransactionToolSchema, type EvmTransactionToolInput } from "./schema.js";
@@ -13,6 +14,8 @@ Actions: get-transaction-details, list-internal-transactions, list-token-transfe
 
 export const evmTransactionTool: McpToolDef<typeof EvmTransactionToolSchema> = {
     name: "transactions_data_evm",
+    title: "EVM transaction details",
+    annotations: READ_ONLY_TOOL,
     description: DESCRIPTION,
     credits: {
         "get-transaction-details": getDetailsCredits,

@@ -1,3 +1,4 @@
+import { READ_ONLY_TOOL } from "@cryptoapis-io/mcp-shared";
 import type { CryptoApisHttpClient, McpLogger, RequestResult } from "@cryptoapis-io/mcp-shared";
 import type { McpToolDef } from "../types.js";
 import { SolanaTransactionToolSchema, type SolanaTransactionToolInput } from "./schema.js";
@@ -8,6 +9,8 @@ const DESCRIPTION = `Transactions Data Solana: get transaction details by transa
 
 export const solanaTransactionTool: McpToolDef<typeof SolanaTransactionToolSchema> = {
     name: "transactions_data_solana",
+    title: "Solana transaction details",
+    annotations: READ_ONLY_TOOL,
     description: DESCRIPTION,
     credits: getDetailsCredits,
     inputSchema: SolanaTransactionToolSchema,
